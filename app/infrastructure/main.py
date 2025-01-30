@@ -1,6 +1,7 @@
 # app/infrastructure/main.py
 from fastapi import FastAPI
 from app.infrastructure.database import database
+from app.adapters.controllers.user_controller import router as user_router
 
 app = FastAPI()
 
@@ -12,6 +13,8 @@ async def startup():
 async def shutdown():
     await database.disconnect()  # Desconectar de la BD
 
-@app.get("/")
-async def home():
-    return {"message": "API conectada a la base de datos correctamente!"}
+# @app.get("/")
+# async def home():
+#     return {"message": "API conectada a la base de datos correctamente!"}
+
+app.include_router(user_router)
